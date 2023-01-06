@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AdvanceJS-403-03</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 100%;
+        height: 936px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        background-image: url("https://www.healthyeating.org/images/default-source/home-0.0/nutrition-topics-2.0/general-nutrition-wellness/2-2-2-2foodgroups_vegetables_detailfeature.jpg?sfvrsn=226f1bc7_6");
+        object-fit: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      .card {
+        width: 408px;
+        height: 800px;
+        display: flex;
+        flex-direction: column;
+        background-color: #fefefe;
+      }
+
+      .heading {
+        padding-top: 11px;
+        font-size: 33px;
+        font-weight: 600;
+        height: 147px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .horizontalLine {
+        border-bottom: 1px solid rgb(233 231 231);
+        width: 300px;
+        position: absolute;
+        top: 217px;
+        left: 806px;
+      }
+
+      .middlePart {
+        height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-left: 53px;
+        margin-top: 25px;
+      }
+      label {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      #firstInput,
+      #secondInput {
+        width: 106px;
+        height: 32px;
+        margin-top: 10px;
+        border: 1px solid black;
+        background: white;
+        padding-left: 10px;
+      }
+      #firstInput {
+        margin-bottom: 8px;
+      }
+      .dollar {
+        font-size: 20px;
+        display: inline-block;
+      }
+
+      .select {
+        width: 200px;
+        height: 38px;
+        border: 1px solid rgb(73, 73, 73);
+        font-size: 15px;
+        padding-left: 9px;
+        background-color: white;
+        margin-top: 10px;
+        outline: none;
+      }
+      .option {
+        height: 37px;
+        border-radius: 8px;
+      }
+
+      .people {
+        font-size: 20px;
+        display: inline-block;
+        font-weight: 600;
+      }
+      .btn {
+        margin-top: 55px;
+        text-align: center;
+      }
+      .btn button {
+        width: 298px;
+        height: 63px;
+        font-size: 18px;
+        color: white;
+        background-color: #710404;
+        border-left: 2px solid black;
+        border-top: 2px solid black;
+        border-right: 2px solid black;
+        border-bottom: 3px solid black;
+        cursor: pointer;
+        text-transform: uppercase;
+      }
+      .forCenter {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+      }
+      .tipAmount {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 200px;
+        width: 200px;
+        color: #710404;
+      }
+      .tipAmount .tipHead {
+        font-size: 20px;
+        text-transform: uppercase;
+      }
+      .tipAmount .amount {
+        display: flex;
+        flex-direction: row;
+      }
+      .tipAmount .fordollar {
+        font-size: 30px;
+        display: inline-block;
+        position: absolute;
+      }
+      .tipAmount .tipRuppes {
+        font-size: 50px;
+        display: inline-block;
+        padding-left: 13px;
+      }
+      .tipAmount .tipBottom {
+        font-size: 18px;
+        color: black;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card" id="card">
+        <div class="heading">
+          <p>Charles' Tip <br />Calculator</p>
+          <div class="horizontalLine"></div>
+        </div>
+
+        <div class="middlePart">
+          <div id="top">
+            <label>How much was your bill?</label><br />
+            <p class="dollar">$</p>
+            <input id="firstInput" type="text" />
+          </div>
+          <div id="center"><label>How was your service?</label><br /></div>
+
+          <div id="bottom">
+            <label>How much pay in sharing the bill</label><br />
+            <input id="secondInput" type="text" />
+            <p class="people">people</p>
+          </div>
+        </div>
+
+        <div class="btn">
+          <button id="calculate">Calculate!</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let arr = [
+        {
+          percentage: 30,
+          string: "Outstanding",
+        },
+        {
+          percentage: 20,
+          string: "Good",
+        },
+        {
+          percentage: 15,
+          string: "It was okay",
+        },
+        {
+          percentage: 10,
+          string: "Bad",
+        },
+        {
+          percentage: 5,
+          string: "Terrible",
+        },
+      ];
+
+      const center = document.getElementById("center");
+
+      const select = document.createElement("select");
+      select.classList.add("select");
+
+      const option = document.createElement("option");
+      const text = document.createTextNode("--Choose an option--");
+
+      option.appendChild(text);
+      option.style.color = "rgb(108 103 103)";
+      select.appendChild(option);
+      console.log(option);
+
+      for (let i = 0; i < arr.length; i++) {
+        const option = document.createElement("option");
+        option.classList.add("option");
+
+        option.innerText = arr[i].percentage + " %" + " - " + arr[i].string;
+        select.appendChild(option);
+      }
+      center.appendChild(select);
+
+      const calculate = document.getElementById("calculate");
+      calculate.addEventListener("click", calculateFun);
+      function calculateFun() {
+        const firstInput = document.getElementById("firstInput").value;
+        const secondInput = document.getElementById("secondInput").value;
+        const select = document.querySelector("select");
+        const selectOption = select.selectedIndex;
+        const chooseOption = select.options[selectOption];                            //   (billAmount * serviceQuality) / numberPeople
+        const serviceValue = chooseOption.value;                                      //     (firstInput * serviceResult) / secondInput
+        const serviceResult = +serviceValue.slice(0, 2);
+        const result = (firstInput * serviceResult) / 100 / secondInput;
+        const tip = (Math.round(result * 100) / 100).toFixed(2);
+        console.log(tip);
+
+        const forCenter = document.createElement("div");
+        forCenter.classList.add("forCenter");
+        const tipAmount = document.createElement("div");
+        tipAmount.classList.add("tipAmount");
+
+        const tipHead = document.createElement("p");
+        tipHead.innerHTML = "Tip Amount";
+        tipHead.classList.add("tipHead");
+        tipAmount.appendChild(tipHead);
+
+        const amount = document.createElement("div");
+        const forDollar = document.createElement("p");
+        forDollar.innerHTML = "$";
+        forDollar.classList.add("fordollar");
+
+        const tipRuppes = document.createElement("p");
+        tipRuppes.innerHTML = tip;
+        tipRuppes.classList.add("tipRuppes");
+
+        amount.appendChild(forDollar);
+        amount.appendChild(tipRuppes);
+        tipAmount.appendChild(amount);
+
+        const tipBottom = document.createElement("p");
+        tipBottom.innerHTML = "each";
+        tipBottom.classList.add("tipBottom");
+        tipAmount.appendChild(tipBottom);
+
+        forCenter.appendChild(tipAmount);
+
+        const card = document.getElementById("card");
+        card.appendChild(forCenter);
+        console.log(forCenter);
+      }
+    </script>
+  </body>
+</html>
